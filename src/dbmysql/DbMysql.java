@@ -18,7 +18,7 @@ public class DbMysql {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        LogIn stdForm = new LogIn();
+        StudentForm stdForm = new StudentForm();
         stdForm.show();
         DB.loadConnection();    
     }

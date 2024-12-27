@@ -16,12 +16,12 @@ public class DB {
     public static Connection con = null;
 
     public static void loadConnection() {
-        String url = "jdbc:mysql://localhost:3306/student_enrollment_system";
-        String user = "root";
-        String pass = "1122";
+        String url = "jdbc:ucanaccess://C:/Users/kk/Downloads/oopLabDB.accdb";
+//        String user = "root";
+//        String pass = "1122";
 
         try {
-            con = DriverManager.getConnection(url, user, pass);
+            con = DriverManager.getConnection(url);
             System.out.println("Database connection successful!");
         } catch (SQLException e) {
             System.out.println("JDBC Driver not found: " + e.getMessage());

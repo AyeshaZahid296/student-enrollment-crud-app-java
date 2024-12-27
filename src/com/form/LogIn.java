@@ -4,7 +4,11 @@
  */
 package com.form;
 
-import com.classes.Login;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -140,20 +144,34 @@ public class LogIn extends javax.swing.JFrame {
 
     
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        String username = nameTxt.getText();
-        String password = passwordTxt.getText();
-        Login log = new Login();
-        boolean validate = log.validateUser(username, password);
-        if(validate){
-            JOptionPane.showMessageDialog(null, "Login sucessfull!", "Login", JOptionPane.INFORMATION_MESSAGE);
-            this.hide();
-            StudentForm stdf = new StudentForm();
-            stdf.show();
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Invalid Username or password!", "Login", JOptionPane.ERROR_MESSAGE);
-        }
+         String url = "jdbc:ucanaccess://C:/Users/kk/Documents/oopLabDB.accdb";
+    String query = "SELECT * FROM Password WHERE userName = ? AND password = ?";
+    
+    String username = nameTxt.getText();
+    String password = passwordTxt.getText();
+    
+    try (Connection connection = DriverManager.getConnection(url); 
+         PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+        // Set values for the SQL query
+        preparedStatement.setString(1, username);
+        preparedStatement.setString(2, password);
         
+        // Execute query
+        ResultSet resultSet = preparedStatement.executeQuery();
+        
+        if (resultSet.next()) {
+            JOptionPane.showMessageDialog(this, "Login Successful!");
+         StudentForm stForm = new StudentForm();
+         this.hide();
+         stForm.show();
+        
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid username or password!");
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    }
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void passwordTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTxtActionPerformed

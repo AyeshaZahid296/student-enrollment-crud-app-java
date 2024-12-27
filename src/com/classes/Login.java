@@ -2,7 +2,6 @@ package com.classes;
 import com.DatabaseCon.DB;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import javax.swing.JOptionPane;
 import java.sql.SQLException;
 
 /*
@@ -22,7 +21,7 @@ public class Login {
         ResultSet resultSet = null;
         try {
            
-            String query = "SELECT * FROM user WHERE user_name = ? AND password = ?";
+            String query = "SELECT * FROM user WHERE userName = ? AND password = ?";
             statement = DB.con.prepareStatement(query);
             statement.setString(1, username); 
             statement.setString(2, password);
